@@ -31,7 +31,7 @@ public class User {
     cascade的注解作用是：group对象的增删改关联到user对象
     fetch是读取查询关联,一对多，一的一方，FetchType默认是LAZY, 多的一方FetchType默认是EAGER
     */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role", //name是表名
 

@@ -16,9 +16,6 @@ public interface UserMessageService {
     //根据主键id查询消息传输对象，含发送者的详细信息等
     UserMessageDto getUserMessageDtoById(Long id);
 
-    //根据拥有消息的用户的id查询消息
-    UserMessage getUserMessageByUserId(Long userId);
-
     //根据用户id（发送方）查询消息
     UserMessage getUserMessageByUserFromId(Long userFromId);
 

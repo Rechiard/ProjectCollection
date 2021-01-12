@@ -40,4 +40,7 @@ public interface LabService {
 
     List<Long> findLabUserIdByLabName(String labName);
 
+    //通过实验室的名称和userId检验是否为实验室的使用人员
+    boolean examineLabUser(String labName,long userId);
+
 }

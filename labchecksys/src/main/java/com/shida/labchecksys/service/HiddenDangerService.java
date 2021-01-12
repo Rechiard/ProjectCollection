@@ -1,6 +1,8 @@
 package com.shida.labchecksys.service;
 
 import com.shida.labchecksys.common.JsonResponse;
+
+import com.shida.labchecksys.pojo.DayCheck;
 import com.shida.labchecksys.pojo.HiddenDanger;
 import com.shida.labchecksys.pojo.User;
 import org.springframework.stereotype.Service;
@@ -23,21 +25,23 @@ public interface HiddenDangerService {
 
     JsonResponse updateDayCheckBySchool(User user, long id, String schoolResult, Date schoolTime);
 
-   JsonResponse insert(HiddenDanger hiddenDanger);
+    JsonResponse insert(HiddenDanger hiddenDanger);
 
-   JsonResponse showAllHidden();
+    JsonResponse showAllHidden();
 
     JsonResponse showAll(long roleId, User user);
 
-   JsonResponse update(HiddenDanger hiddenDanger);
+    JsonResponse update(HiddenDanger hiddenDanger);
 
-   JsonResponse delete(int id);
+    JsonResponse delete(int id);
 
-   JsonResponse synchronization();
+    JsonResponse synchronization();
 
-   List<HiddenDanger> showAllByDepartment(String department);
+    List<HiddenDanger> showAllByDepartment(String department);
 
-   List<HiddenDanger> showAllByTestPerson(String testPerson);
+    List<HiddenDanger> showAllByTestPerson(String testPerson);
 
-   JsonResponse examineIsFinish(int id,String testPerson);
+    JsonResponse examineIsFinish(int id,String testPerson);
+
+    List<DayCheck> selectByPrincipal(String principal);
 }

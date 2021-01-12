@@ -1,7 +1,7 @@
 package com.shida.labchecksys.service;
 
-import org.springframework.stereotype.Service;
 import com.shida.labchecksys.pojo.Role;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;

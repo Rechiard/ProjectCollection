@@ -18,6 +18,6 @@ public interface DayCheckService {
 
     JsonResponse addDayCheck(User user, long checker, String department, Date checkTime, String checkObject, String danger, String suggestions, int isDanger);
 
-    JsonResponse safeSave(long checker, String department, Date checkTime, String checkObject, String danger, String suggestions, int isDanger);
+    JsonResponse safeSave(User user,long checker, String department, Date checkTime, String checkObject, String danger, String suggestions, int isDanger);
 
 }

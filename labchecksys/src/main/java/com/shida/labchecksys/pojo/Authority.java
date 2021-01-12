@@ -2,6 +2,7 @@ package com.shida.labchecksys.pojo;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "lab_function")
 @NoArgsConstructor
@@ -28,4 +28,38 @@ public class Authority {
     @JsonBackReference
     @ManyToMany(mappedBy = "authorities")
     private List<Role> roles;
+
+    public long getFunctionId() {
+        return functionId;
+    }
+
+    public void setFunctionId(long functionId) {
+        this.functionId = functionId;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        roles = null;
+        return "Authority{" +
+                "functionId=" + functionId +
+                ", functionName='" + functionName + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }

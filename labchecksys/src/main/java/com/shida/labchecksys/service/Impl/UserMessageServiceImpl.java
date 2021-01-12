@@ -6,17 +6,22 @@ import com.shida.labchecksys.pojo.UserMessage;
 import com.shida.labchecksys.pojo.dto.UserMessageDto;
 import com.shida.labchecksys.pojo.dto.UserMessageSearchCondition;
 import com.shida.labchecksys.service.UserMessageService;
+import com.shida.labchecksys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserMessageServiceImpl implements UserMessageService {
 
     @Autowired
     private UserMessageMapper userMessageMapper;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public UserMessage getUserMessageById(Long id) {
@@ -26,11 +31,6 @@ public class UserMessageServiceImpl implements UserMessageService {
     @Override
     public UserMessageDto getUserMessageDtoById(Long id) {
         return id == null ? null : userMessageMapper.getUserMessageDtoById(id);
-    }
-
-    @Override
-    public UserMessage getUserMessageByUserId(Long userId) {
-        return userId == null ? null : userMessageMapper.getUserMessageByUserId(userId);
     }
 
     @Override
@@ -45,12 +45,22 @@ public class UserMessageServiceImpl implements UserMessageService {
         }
         UserMessageSearchCondition condition = new UserMessageSearchCondition();
         condition.setUserId(userId);
-        return userMessageMapper.listUserMessages(condition);
+        return userMessageMapper.listUserMessages(condition.getUserId());
     }
 
     @Override
     public List<UserMessageDto> listUserMessages(UserMessageSearchCondition condition) {
-        return null;
+        List<UserMessageDto> temp =  userMessageMapper.countUserMessagesByUserIdAndRead(condition.getUserId(),condition.getIsRead());
+        for(UserMessageDto userMessageDto : temp){
+            Map map = userService.findUserNameAndRoleNameByUserId(userMessageDto.getUserFromId());
+            for (Object key : map.keySet()) {
+                String roleName = map.get(key).toString();
+                String userName = key.toString();
+                userMessageDto.setUserFromRealName(userName);
+                userMessageDto.setUserFromRole(roleName);
+            }
+        }
+        return temp;
     }
 
     @Override
@@ -67,7 +77,7 @@ public class UserMessageServiceImpl implements UserMessageService {
         if (userId == null) {
             return 0;
         }
-        List<UserMessage> userMessages = userMessageMapper.countUserMessagesByUserIdAndRead(userId, isRead);
+        List<UserMessageDto> userMessages = userMessageMapper.countUserMessagesByUserIdAndRead(userId, isRead);
         long size = userMessages.size();
         return size;
     }

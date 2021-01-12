@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @RestController
-@RequestMapping("/user/message")
+@RequestMapping("/userMessage")
 public class UserMessageController {
 
 
@@ -27,32 +27,49 @@ public class UserMessageController {
     @Autowired
     UserService userService;
 
+    public User getUser(HttpSession request) {
+
+        User user = (User) request.getAttribute("user");
+        return user;
+    }
+
     // 跳转用户消息中心 ,计算未读消息的数量，传给model
     @RequestMapping("/page")
-    public String page(Model model, HttpSession session) {
-        Long userId = userService.getSessionUserInfo(session).getUserId();
+    public JsonResponse page(HttpSession session) {
+        User user = getUser(session);
+        Long userId = user.getUserId();
+        String userName = user.getUserName();//需要权限检验，检验是否是使用人员
+        if (userName == null) {
+            return JsonResponse.toFailed("用户未登录！");
+        }
         long countUnread = userMessageService.countUserMessagesByUserIdAndRead(userId, 0);
-        model.addAttribute("countUnread", countUnread);
-        return "user/message/page";
+        return JsonResponse.toSuccess(countUnread);
     }
 
     ///跳转用户消息详情
     @RequestMapping("/detail")
-    public String detail(Model model, Long id) {
+    public JsonResponse detail(Long id) {
+
+
         UserMessageDto userMessageDto = userMessageService.getUserMessageDtoById(id);
         if (userMessageDto.getIsRead() == 0) {
             //点了消息，将未读状态更新为已读
             userMessageService.updateUserMessageReadById(id);
         }
-        model.addAttribute("Message", userMessageDto);
-        return "user/message/detail";
+        return JsonResponse.toSuccess(userMessageDto);
     }
 
 
     //查询用户已读还是未读消息的
     @RequestMapping("/getMessageInfo")
     public JsonResponse getReadMessageInfo(HttpSession session, int isRead) {
-        Long userId = userService.getSessionUserInfo(session).getUserId();
+
+        User user = getUser(session);
+        String userName = user.getUserName();//需要权限检验，检验是否是使用人员
+        if (userName == null) {
+            return JsonResponse.toFailed("用户未登录！");
+        }
+        Long userId = user.getUserId();
         UserMessageSearchCondition condition = new UserMessageSearchCondition();
         condition.setUserId(userId);
         condition.setIsRead(isRead);
@@ -70,7 +87,9 @@ public class UserMessageController {
     //发送消息给用户，插入数据库
     @RequestMapping("/insertSendMessage")
     public JsonResponse insertSendMessage(HttpSession session, UserMessage message) {
-        Long userId = userService.getSessionUserInfo(session).getUserId();
+
+        User user = getUser(session);
+        Long userId = user.getUserId();
         message.setUserFromId(userId);
         message.setMessageTime(new Date());
         userMessageService.insertOneUserMessage(message);
@@ -79,9 +98,11 @@ public class UserMessageController {
 
     //批量发送消息给用户，插入数据库
     @RequestMapping("/many/insertSendMessage")
-    public Map<String, Object> manyInsertSendMessage(HttpSession session, String ids, UserMessage message) {
+    public JsonResponse manyInsertSendMessage(HttpSession session, String ids, UserMessage message) {
+
         Map<String, Object> map = new HashMap<>(1);
-        Long userId = userService.getSessionUserInfo(session).getUserId();
+        User user = getUser(session);
+        Long userId = user.getUserId();
         List<Long> idsParsed = JSON.parseArray(ids, Long.class);
         List<UserMessage> userMessages = new ArrayList<>(idsParsed.size());
         for (Long id : idsParsed) {
@@ -100,12 +121,12 @@ public class UserMessageController {
             e.printStackTrace();
             map.put("data", "failure");
         }
-        return map;
+        return JsonResponse.toSuccess(map);
     }
 
     // 发送全体消息给用户，插入数据库 message 新发送的消息
     @RequestMapping("/all/insertSendMessage")
-    public Map<String, Object> allInsertSendMessage(HttpSession session, UserMessage message) {
+    public JsonResponse allInsertSendMessage(HttpSession session, UserMessage message) {
         Map<String, Object> map = new HashMap<>(1);
         Long userId = userService.getSessionUserInfo(session).getUserId();
         List<User> users = userService.findAllUser();
@@ -113,8 +134,8 @@ public class UserMessageController {
         for (User user : users) {
             UserMessage userMessage = new UserMessage();
             userMessage.setUserId(user.getUserId());
-            userMessage.setUserFromId(userId);
             userMessage.setMessageTitle(message.getMessageTitle());
+            userMessage.setUserFromId(userId);
             userMessage.setMessageContent(message.getMessageContent());
             userMessage.setMessageTime(new Date());
             userMessage.setMessageRemark(message.getMessageRemark());
@@ -127,8 +148,7 @@ public class UserMessageController {
             e.printStackTrace();
             map.put("data", "failure");
         }
-
-        return map;
+        return JsonResponse.toSuccess(map);
     }
 
     /*

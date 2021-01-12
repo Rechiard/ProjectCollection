@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @ResponseBody
 @Controller
-public class UserLoginController {
+public class    UserLoginController {
 
     public User getUser(HttpSession request) {
 
@@ -31,8 +31,12 @@ public class UserLoginController {
         if (userName != null && passWord != null) {
             User user = userService.login(userName, passWord);
             if (user != null) {
-                session.setAttribute("user", user);
-                System.out.println(user + "    Login");
+
+                //2021 1-7 修改人：龚剑波
+                User user1 = userService.findAllByUserName(user.getUserName()).get(0);
+                session.setAttribute("user", user1);
+                System.out.println(user1 + "    Login");
+
                 return JsonResponse.toSuccess("登陆成功！");
             } else {
                 return JsonResponse.toFailed("登陆失败！");

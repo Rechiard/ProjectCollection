@@ -37,19 +37,18 @@ public class DayCheckServiceImpl implements DayCheckService {
     private void Message(long userId, long userFromId, long roleId) {//传递信息
         //两个id  角色ID
         String title = "实验室日查安全隐患审查";
-        String contenet = "你有一个实验室安全隐患待审查！";
+        String content = "你有一个实验室安全隐患待审查！";
         Date currentTime = CurrentTime.getCurrentTime();
         String role = RoleEnum.getRolesList().get((int) roleId - 1);
         UserMessageDto userMessageDto = new UserMessageDto();
         userMessageDto.setUserId(userId);
         userMessageDto.setUserFromId(userFromId);
         userMessageDto.setUserFromRole(role);
-        userMessageDto.setMessageContent(contenet);
+        userMessageDto.setMessageContent(content);
         userMessageDto.setMessageTime(currentTime);
         userMessageDto.setMessageTitle(title);
         userMessageService.insertOneUserMessage(userMessageDto);
     }
-
 
     @Override
     public JsonResponse showSelf(long checkerId) {
@@ -72,19 +71,23 @@ public class DayCheckServiceImpl implements DayCheckService {
     @Override
     public JsonResponse addDayCheck(User user, long checker, String department, Date checkTime, String checkObject, String danger, String suggestions, int isDanger) {
         //先检验是否是该实验室的使用人员
-
         long userFromId = user.getUserId();
+        if(!labService.examineLabUser(checkObject,userFromId))
+            return JsonResponse.toFailed("你不是该实验室的使用人员！");
         long roleId = user.getRoles().get(0).getRoleId();
         long userId = labService.findLeadrIdByLabName(checkObject);
         Message(userId, userFromId, roleId);
-        int stage = 1;
+        int stage = 2;
         dayCheckMapper.addDayCheck(checker, department, checkTime, checkObject, danger, suggestions, isDanger, stage);
         return JsonResponse.toSuccess("自查填报成功！");
     }
 
     @Override
-    public JsonResponse safeSave(long checker, String department, Date checkTime, String checkObject, String danger, String suggestions, int isDanger) {
-        int stage = 5;
+    public JsonResponse safeSave(User user,long checker, String department, Date checkTime, String checkObject, String danger, String suggestions, int isDanger) {
+        long userFromId = user.getUserId();
+        if(!labService.examineLabUser(checkObject,userFromId))
+            return JsonResponse.toFailed("你不是该实验室的使用人员！");
+        int stage = 6;
         dayCheckMapper.addDayCheck(checker, department, checkTime, checkObject, danger, suggestions, isDanger, stage);
         return JsonResponse.toSuccess("自查填报成功！");
     }

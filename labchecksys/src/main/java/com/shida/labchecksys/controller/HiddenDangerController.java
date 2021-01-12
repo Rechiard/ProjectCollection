@@ -30,6 +30,9 @@ public class HiddenDangerController {
     @Autowired
     UserService userService;
 
+    /**
+     *对有隐患的日查表进行操作的部分
+     */
     //该方法用于展示该用户需要审核的有隐患的日查记录
     @RequestMapping("showDayCheck")
     public JsonResponse showDayCheck(HttpSession session) {
@@ -60,6 +63,8 @@ public class HiddenDangerController {
                 if (reformPrincipal.equals(user.getUserName())) {
                     return hiddenDangerService.updateDayCheckByPrincipal(user, dayCheck.getId(), dayCheck.getReformMeasure(), currentTime);
                 }
+                else
+                    break;
             }
             case 4: {
                 return hiddenDangerService.updateDayCheckByAccepter(user, dayCheck.getId(), dayCheck.getAccepter(), dayCheck.getAccResults(), currentTime);
@@ -70,7 +75,12 @@ public class HiddenDangerController {
             default:
                 return JsonResponse.toFailed("自查填报失败！");
         }
+        return JsonResponse.toFailed("自查填报失败！");
     }
+
+    /**
+     *对隐患台账进行操作的部分
+     */
 
     //根据角色权限不同，显示不同级别的隐患信息,这里的显示是显示隐患整改台账
     //没有添加用户权限判断之前已经完成了同步以及显示功能

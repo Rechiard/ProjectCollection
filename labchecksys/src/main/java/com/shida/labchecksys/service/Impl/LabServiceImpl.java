@@ -100,4 +100,19 @@ public class LabServiceImpl implements LabService {
             return JsonResponse.toSuccess("实验室申请失败");
 
     }
+
+    @Override
+    public boolean examineLabUser(String labName, long userId) {
+        List<Long> a=new ArrayList<>();
+        String labUser=labMapper.findLabUserIdByLabName(labName);
+        Long i;
+        for(String id:labUser.split(" ")){
+            i=Long.parseLong(id);
+            if(i==userId){
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

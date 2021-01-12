@@ -6,13 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DayCheck implements Serializable {
+public class SpotCheck {
     long id;
     long checker;//检查者的ID
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -37,5 +36,5 @@ public class DayCheck implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     Date schoolTime;
     int isDanger;
-    int stage;//1:使用者检查 2：安全责任人分配整改责任人 3:整改责任人填写 4：分管领导或者安全管理员检查 5：学校复查
+    int type;//0是抽查  1是专项检查
 }

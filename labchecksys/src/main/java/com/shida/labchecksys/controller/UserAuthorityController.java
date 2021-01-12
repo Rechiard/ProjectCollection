@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@RequestMapping("/Authority/")
 public class UserAuthorityController {
 
     @Autowired
@@ -26,6 +28,12 @@ public class UserAuthorityController {
     @Autowired
     AuthorityService authorityService;
 
+    public User getUser(HttpSession request) {
+
+        User user = (User) request.getAttribute("user");
+        return user;
+    }
+
 
     /*
         用户功能板块
@@ -33,9 +41,17 @@ public class UserAuthorityController {
 
     //查询指定姓名的用户信息
     @RequestMapping("/finduser")
-    public List<User> findByName(@RequestParam(value = "userName") String userName) {
+    public User findByName(@RequestParam(value = "userName") String userName) {
         System.out.println("success");
-        return userService.findAllByUserName(userName);
+        User user = userService.findAllByUserName(userName).get(0);
+        return user;
+    }
+
+    //2021-1-7 修改人：龚剑波
+    @RequestMapping("/showuser")
+    public User showUser(HttpSession session) {
+        User user = getUser(session);
+        return user;
     }
 
     //查询所有用户信息
@@ -88,6 +104,15 @@ public class UserAuthorityController {
         }
         return s;
     }
+
+    //2021-1-7 修改人：龚剑波
+    @RequestMapping("findrolename")
+    public String findRoleName(HttpSession session){
+        User user = getUser(session);
+        return user.getRoles().get(0).getRoleName();
+    }
+
+
 
     /*
         权限功能板块

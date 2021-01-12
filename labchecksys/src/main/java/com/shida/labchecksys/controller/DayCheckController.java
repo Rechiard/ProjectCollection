@@ -1,6 +1,7 @@
 package com.shida.labchecksys.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.shida.labchecksys.pojo.DayCheck;
 import com.shida.labchecksys.pojo.User;
 import com.shida.labchecksys.service.DayCheckService;
@@ -50,8 +51,10 @@ public class DayCheckController {
         }
         Date currentTime = getCurrentTime();
         int isDanger = 1;
-        String department = userService.getSessionUserInfo(session).getDepartment();
-        Long checker = user.getUserId();
+
+        //2021-1-7 修改人：龚剑波
+        String department = user.getDepartment();
+        long checker = user.getUserId();
         return dayCheckService.addDayCheck(user, checker, department, currentTime, dayCheck.getCheckObject(), dayCheck.getDanger(), dayCheck.getSuggestions(), isDanger);
     }
 
@@ -63,13 +66,13 @@ public class DayCheckController {
         if (userName == null) {
             return JsonResponse.toFailed("用户未登录！");
         }
-        Long checker = user.getUserId();
-        String department = userService.getSessionUserInfo(session).getDepartment();
+        long checker = user.getUserId();
+        String department = user.getDepartment();
         Date checkTime = getCurrentTime();
         String danger = "无安全隐患";
         String suggestions = "无整改措施";
         int isDanger = 0;//0是没有危险，1是有危险
-        return dayCheckService.addDayCheck(user, checker, department, checkTime, checkObject, danger, suggestions, isDanger);
+        return dayCheckService.safeSave(user, checker, department, checkTime, checkObject, danger, suggestions, isDanger);
     }
 
     @RequestMapping("showSelf")

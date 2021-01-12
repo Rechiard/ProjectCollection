@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /*
@@ -14,7 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HiddenDanger {
+public class HiddenDanger implements Serializable {
 
     private long id;        //表格序号
 
@@ -36,7 +37,9 @@ public class HiddenDanger {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date rectificationFinishTime;   //整改完成时间
+
+    //修改名字 2021-01-10 修改人：龚剑波
+    private Date reFinishTime;   //整改完成时间
 
     private String testPerson;   //验收人
 

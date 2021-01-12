@@ -1,6 +1,5 @@
 package com.shida.labchecksys.mapper;
 
-import com.shida.labchecksys.common.JsonResponse;
 import com.shida.labchecksys.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

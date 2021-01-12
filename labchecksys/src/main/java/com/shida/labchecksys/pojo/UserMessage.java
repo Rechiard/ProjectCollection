@@ -31,6 +31,6 @@ public class UserMessage {
 
     protected int isRead;//0是未读1是已读
 
-    // 消息备注，可以为空，不超过500个字符
+    // 消息备注,为空不进行消息跳转，若不为空就进行消息跳转，特殊字符排序+消息类型的主键ID
     private String messageRemark;
 }
