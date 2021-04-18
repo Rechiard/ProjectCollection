@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p id="js">JavaScript</p>
+<div id="list">
+    <p id="me">JAVAME</p>
+    <p id="ee">JAVAEE</p>
+    <p id="se">JAVASE</p>
+</div>
+
+<script>
+
+    var ee = document.getElementById('ee');
+    var js = document.getElementById('js');
+    var list = document.getElementById('list');
+    //要包含的节点，insertBefore(newNode,targerNode)
+    list.insertBefore(js,ee);
+
+</script>
+
+
+</body>
+</html>

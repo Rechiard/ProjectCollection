@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script>
+
+    //ES6之后
+    //定义一个学生的类
+    class Student{
+        constructor(name) {
+            this.name = name;
+        }
+        hello(){
+            alert("Hello");
+        }
+    }
+
+    class XiaoStudent extends Student{
+        constructor(name,grade) {
+            super(name);
+            this.grade = grade;
+        }
+
+        myGrade(){
+            alert("我是一个小学生");
+        }
+    }
+
+    var xiaoming = new Student("xiaoming");
+    var xiaoming = new XiaoStudent("xiaohong");
+
+</script>
+
+<body>
+
+</body>
+</html>

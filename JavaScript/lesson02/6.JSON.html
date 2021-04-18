@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script>
+
+    var Student = {
+        run: function(){
+            console.log(this.name + "run.......");
+        }
+    }
+
+    var xiaoming = {
+        name: 'xiaoming'
+    };
+
+    //小明的原型是Student
+    xiaoming.__proto__ = Student;
+
+    var Bird = {
+        fly: function(){
+            console.log(this.name + "fly.......");
+        }
+    }
+    //小明的原型是Bird
+    xiaoming.__proto__ = Bird;
+
+</script>
+<body>
+
+</body>
+</html>
