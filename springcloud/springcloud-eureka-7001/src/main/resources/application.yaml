@@ -1,0 +1,15 @@
+server:
+  port: 7001
+
+#Eureka 配置
+eureka:
+  instance:
+    hostname: eureka7001.com       #Eureka服务端的实例名称,类似于域名映射的道理，设置集群需要在hosts文件中添加三个localhost的不同映射，
+                              #例如eureka7001.com,eureka7002.com,eureka7003.com，然后将每个节点的localhost改为不同的name既可，否则默认h会把相同的url去掉
+  client:
+    register-with-eureka: false #表示是否向eureka注册中心注册自己
+    fetch-registry: false #表示自己为注册中心
+    service-url: #监控中心的url地址
+      #单机：  defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      #集群（关联）：  http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/   #关联7002和7003
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/

@@ -1,0 +1,27 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: springcloud-zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: zuul9527.com
+    prefer-ip-address: true
+
+info:
+  app.name: bobo
+  company.name: 龚剑波
+
+
+#zuul配置
+zuul:
+  routes:
+    mydept.serviceId: springcloud-provider-dept   #微服务名称
+    mydept.path: /mydept/**                       #设置微服务名称的访问域名，访问路径改为： www.rechiard.com(hosts文件的域名):9527/mydept/**
+  ignored-services: springcloud-provider-dept     #不能再使用原路劲(www.rechiard.com(hosts文件的域名):9527/springcloud-provider-dept/**
+  #ignore-services: "*"   #隐藏全部的
+  prefix: /bobo   #设置统一的前缀，访问路径改为： www.rechiard.com(hosts文件的域名):9527/bobo/mydept/**
