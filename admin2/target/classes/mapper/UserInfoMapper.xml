@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.system.mapper.UserInfoMapper">
+    
+    <select id="countByTable" resultType="java.lang.Integer">
+        select count(A.id) from user_info A
+        <include refid="search"/>;
+    </select>
+
+    <select id="listByTable" resultType="com.example.system.vo.UserInfoVo">
+        select <include refid="UserInfoVo"/>
+        from user_info A
+        left join map_user_role B ON B.user_id = A.id
+        LEFT JOIN role_info C ON C.id = B.role_id
+        left join dept_info D ON A.dept_id = D.id
+        <include refid="search"/>
+        GROUP BY A.id
+        limit #{entity.offset}, #{entity.limit}
+    </select>
+
+    <sql id="UserInfoVo">
+        A.id,
+        A.dept_id,
+        A.name,
+        A.nick_name,
+        A.phone,
+        A.sex,
+        A.description,
+        C.id as role_ids,
+        C.name as role_name,
+        D.name as dept_name
+    </sql>
+
+    <!--做搜索的时候用-->
+    <sql id="search">
+        where A.status = 1
+        <if test="entity.name != null and entity.name != ''">
+            and A.`name` like '%${entity.name}%'
+        </if>
+        <if test="entity.nickName != null and entity.nickName != ''">
+            and A.`nick_name` like '%${entity.nickName}%'
+        </if>
+        <if test="entity.phone != null and entity.phone != ''">
+            and A.`phone` like '%${entity.phone}%'
+        </if>
+        <if test="entity.deptId != null and entity.deptId != 0">
+            and A.dept_id like '%${entity.deptId}%'
+        </if>
+    </sql>
+</mapper>

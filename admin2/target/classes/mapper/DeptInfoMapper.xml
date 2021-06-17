@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.system.mapper.DeptInfoMapper">
+
+    <select id="listByTable" resultType="com.example.system.vo.DeptInfoVo">
+        select <include refid="allField"/>, B.name pid_name
+        from dept_info A
+        left join dept_info B on A.pid = B.id
+        <include refid="search"/>
+        order by A.sort
+    </select>
+
+    <sql id="allField">
+        A.id,
+        A.pid,
+        A.name,
+        A.remark,
+        A.sort,
+        A.create_user,
+        A.create_time,
+        A.status
+    </sql>
+
+    <sql id="search">
+        where A.status = 1
+    </sql>
+
+</mapper>

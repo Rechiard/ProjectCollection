@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>部门管理</title>
+    <link rel="stylesheet" th:href="@{/layuimini/lib/layui-v2.5.5/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuimini/css/public.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuimini/js/lay-module/dtree/dtree.css}">
+    <link rel="stylesheet" th:href="@{/layuimini/js/lay-module/dtree/font/dtreefont.css}">
+    <style>
+        .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
+            height: 34px;
+            line-height: 34px;
+            padding: 0 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div>
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-sm" id="add">新增部门</button>
+                <button class="layui-btn layui-btn-sm" id="btn-expand">全部展开</button>
+                <button class="layui-btn layui-btn-sm" id="btn-fold">全部折叠</button>
+            </div>
+            <table id="munu-table" class="layui-table" lay-filter="munu-table" style="margin: 0;"></table>
+
+            <!-- 操作列 -->
+            <script type="text/html" id="auth-state">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+
+        </div>
+    </div>
+</div>
+
+<div id="dataFormModal" class="straw-layer" style="display: none;padding: 10px">
+    <form class="layui-form" id="dataForm" lay-filter="dataFormFilter">
+        <input type="hidden" name="id">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级部门</label>
+            <div class="layui-input-block">
+                <input type="text" placeholder="主目录" autocomplete="off" id="pidText" class="layui-input" readonly>
+                <input type="hidden" name="pid" id="pid" value="0" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" placeholder="请输入部门名称" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="number" name="sort" lay-verify="required" value="0" placeholder="请输入排序" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" name="remark" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="dataFormSubmit">保存</button>
+                <button type="button" class="layui-btn layui-btn-primary" id="dataFormReset">取消</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script th:src="@{/layuimini/lib/layui-v2.5.5/layui.js}" charset="utf-8"></script>
+<script th:src="@{/layuimini/js/lay-config.js?v=2.0.0}" charset="utf-8"></script>
+<script th:inline="javascript">
+    layui.use(['table', 'treetable','dtree','form'], function () {
+        let $ = layui.jquery,
+            table = layui.table,
+            treetable = layui.treetable,
+            dtree = layui.dtree,
+            form = layui.form;
+
+        let active = {
+            dataModelType: 1,
+            openDataFormModal() {
+                let title = active.dataModelType == 1 ? '新增部门' : '编辑部门';
+                layer.open({
+                    title: title,
+                    type: 1,
+                    content: $('#dataFormModal'),
+                    area: ['600px', '400px'],
+                    maxmin: true,
+                    cancel: function () {
+                        active.closeDataFormModal();
+                    }
+                });
+            },
+            closeDataFormModal() {
+                $('#dataForm')[0].reset();
+                $("#pid").val('0');
+                layer.closeAll();
+            }
+        };
+
+        // 渲染表格
+        treetable.render({
+            treeColIndex: 1,
+            treeSpid: 0,
+            treeIdName: 'id',
+            treePidName: 'pid',
+            elem: '#munu-table',
+            url: '/system/deptInfo/listByTable',
+            page: false,
+            cols: [ [
+                {type: 'numbers'},
+                {field: 'name',title: '部门名称'},
+                {field: 'remark', title: '备注'},
+                {field: 'sort', width: 60, align: 'center', title: '排序'},
+                {title: '操作', width: 130,align:"center", toolbar: '#auth-state', align: "center"}
+            ]]
+        });
+
+        //加载所有部门
+        $('#pidText').on('click', function () {
+            layer.open({
+                type: 1,
+                title: "选择上级部门",
+                area: ["400px","80%"],
+                content: '<ul id="openTree" class="dtree" data-id="0"></ul>',
+                btn: ['确认选择'],
+                success: function (layero, index) {
+                    dtree.render({
+                        elem: "#openTree",
+                        method: 'post',
+                        url: "/system/deptInfo/listByDTree",
+                        iconfontStyle:[{
+                            fnode:{
+                                node:{
+                                    open: "dtree-icon-xiangxia1",
+                                    close: "dtree-icon-xiangyou"
+                                }
+                            },
+                            snode: {
+                                leaf: "dtree-icon-xinxipilu",
+                                node:{
+                                    open:"dtree-icon-appreciate"
+                                }
+                            }
+                        }],
+                        //开启菜单栏
+                        menubar: true,
+                        /**
+                         * 加载完毕后,树解析后的回调函数,携带三个参数，
+                         * data和url加载均可使用，
+                         * 增量加载时，加载子节点时也可以回调该方法
+                         *
+                         * @param data 当前异步加载的数据
+                         * @param obj 当前组件的根节点的JQuery对象
+                         * @param first 是否首次加载
+                         */
+                        done: function (data, obj, first) {
+                            //初始化选中节点，并设值
+                            dtree.dataInit("openTree",$("#pid").val.toString());
+                        }
+                    });
+                    //双击事件执行完毕后，用户自定义想做的事情
+                    // 绑定节点的双击,作用和点击 ‘确认选择’效果一样
+                    dtree.on("nodedblclick(openTree)", function (obj) {
+                        $("#pid").val(obj.param.nodeId);
+                        $("#pidText").val(obj.param.context);
+                        layer.close(index);
+                    });
+                },
+                yes: function (index, layero) {
+                    let param = dtree.getNowParam("openTree");
+                    $("#pid").val(param.nodeId);
+                    $("#pidText").val(param.context)
+                    layer.close(index);
+                }
+            });
+        });
+
+        $('#add').on('click', function () {
+            active.dataModelType = 1;
+            active.openDataFormModal();
+        })
+
+        $('#btn-expand').click(function () {
+            treetable.expandAll('#munu-table');
+        });
+
+        $('#btn-fold').click(function () {
+            treetable.foldAll('#munu-table');
+        });
+
+        // 监听行按钮
+        table.on('tool(munu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if(layEvent === 'edit'){
+                //回显数据
+                active.dataModelType = 2;
+                form.val('dataFormFilter',data);
+                $('pidText').val(data.pidName);
+                active.openDataFormModal();
+            }else if(layEvent === 'del'){
+                layer.confirm('确定删除该数据嘛？', function (index) {
+                    $.ajax({
+                        type: 'post',
+                        dataType: 'json',
+                        url: '/system/deptInfo/deleteById',
+                        data: {id: data.id},
+                        success: function (res) {
+                            if (res.code == 200) {
+                                layer.msg(res.msg, {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(res.msg, {time: 2000, icon: 2});
+                            }
+                        },
+                        error: function (res) {
+                            layer.msg('请求失败', {time: 2000, icon: 2});
+                        }
+                    });
+                });
+            }
+        });
+
+        // 监听表单取消
+        $('#dataFormReset').on('click', function () {
+            active.closeDataFormModal();
+        });
+
+        form.on('submit(dataFormSubmit)', function (data) {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: active.dataModelType == 1? '/system/deptInfo/save': '/system/deptInfo/updateById',
+                data: data.field,
+                success: function (res) {
+                    if (res.code == 200) {
+                        layer.msg(res.msg, {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 2000, icon: 2});
+                    }
+                },
+                error: function (res) {
+                    layer.msg('请求失败', {time: 2000, icon: 2});
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
