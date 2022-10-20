@@ -1,0 +1,11 @@
+# SpringBoot所有的配置类，都有一个自动配置类    RedisAutoConfiguration
+# 自动配置类都会绑定一个 properties    RedisProperties
+# 这个properties就是用来绑定再application.properties中使用的
+
+#redis配置
+spring:
+  redis:
+    host: 8.142.14.138
+    port: 6379
+    password: 123456
+
