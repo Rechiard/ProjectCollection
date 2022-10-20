@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.StudentsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Students">
+        <id column="s_id" property="sId" />
+        <result column="s_studentId" property="sStudentid" />
+        <result column="s_name" property="sName" />
+        <result column="s_sex" property="sSex" />
+        <result column="s_school" property="sSchool" />
+        <result column="s_college" property="sCollege" />
+        <result column="s_grade" property="sGrade" />
+        <result column="s_profession" property="sProfession" />
+        <result column="s_class" property="sClass" />
+        <result column="s_classtype" property="sClasstype" />
+        <result column="s_jobstatus" property="sJobstatus" />
+        <result column="s_tutor" property="sTutor" />
+        <result column="s_phone" property="sPhone" />
+        <result column="s_idcard" property="sIdcard" />
+        <result column="s_password" property="sPassword" />
+        <result column="s_createTime" property="sCreatetime" />
+        <result column="s_changeTime" property="sChangetime" />
+        <result column="s_picture" property="sPicture" />
+        <result column="s_token" property="sToken" />
+        <result column="s_tokenendtime" property="sTokenendtime" />
+        <result column="s_deviceId" property="sDeviceid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        s_id, s_studentId, s_name, s_sex, s_school, s_college, s_grade, s_profession, s_class, s_classtype, s_jobstatus, s_tutor, s_phone, s_idcard, s_password, s_createTime, s_changeTime, s_picture, s_token, s_tokenendtime, s_deviceId
+    </sql>
+
+</mapper>

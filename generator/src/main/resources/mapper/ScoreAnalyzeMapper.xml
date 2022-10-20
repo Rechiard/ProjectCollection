@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.ScoreAnalyzeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.ScoreAnalyze">
+        <id column="id" property="id" />
+        <result column="s_stuId" property="sStuid" />
+        <result column="s_stuName" property="sStuname" />
+        <result column="s_stuSex" property="sStusex" />
+        <result column="s_stuCollege" property="sStucollege" />
+        <result column="s_stuGrade" property="sStugrade" />
+        <result column="s_stuProfession" property="sStuprofession" />
+        <result column="s_stuClass" property="sStuclass" />
+        <result column="s_byds_spbgh" property="sBydsSpbgh" />
+        <result column="s_byds_dssl" property="sBydsDssl" />
+        <result column="s_bysj_zyzfw" property="sBysjZyzfw" />
+        <result column="s_bysj_shsj" property="sBysjShsj" />
+        <result column="s_byjt" property="sByjt" />
+        <result column="s_byxs" property="sByxs" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, s_stuId, s_stuName, s_stuSex, s_stuCollege, s_stuGrade, s_stuProfession, s_stuClass, s_byds_spbgh, s_byds_dssl, s_bysj_zyzfw, s_bysj_shsj, s_byjt, s_byxs
+    </sql>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.TeacherMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Teacher">
+        <id column="t_id" property="tId" />
+        <result column="t_teacherId" property="tTeacherid" />
+        <result column="t_password" property="tPassword" />
+        <result column="t_name" property="tName" />
+        <result column="t_phone" property="tPhone" />
+        <result column="t_dutyphone" property="tDutyphone" />
+        <result column="t_email" property="tEmail" />
+        <result column="t_college" property="tCollege" />
+        <result column="t_address" property="tAddress" />
+        <result column="t_opinions" property="tOpinions" />
+        <result column="t_picture" property="tPicture" />
+        <result column="t_token" property="tToken" />
+        <result column="t_expert" property="tExpert" />
+        <result column="t_researchdirection" property="tResearchdirection" />
+        <result column="t_changeTime" property="tChangetime" />
+        <result column="t_createTime" property="tCreatetime" />
+        <result column="t_frequency" property="tFrequency" />
+        <result column="t_type" property="tType" />
+        <result column="t_searchnum" property="tSearchnum" />
+        <result column="t_introduction" property="tIntroduction" />
+        <result column="t_power" property="tPower" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        t_id, t_teacherId, t_password, t_name, t_phone, t_dutyphone, t_email, t_college, t_address, t_opinions, t_picture, t_token, t_expert, t_researchdirection, t_changeTime, t_createTime, t_frequency, t_type, t_searchnum, t_introduction, t_power
+    </sql>
+
+</mapper>

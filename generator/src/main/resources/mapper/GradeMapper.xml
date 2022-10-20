@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.GradeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Grade">
+        <id column="g_id" property="gId" />
+        <result column="g_stuId" property="gStuid" />
+        <result column="g_stuName" property="gStuname" />
+        <result column="g_stuSex" property="gStusex" />
+        <result column="g_stuCollege" property="gStucollege" />
+        <result column="g_stuGrade" property="gStugrade" />
+        <result column="g_stuClass" property="gStuclass" />
+        <result column="g_stuProfession" property="gStuprofession" />
+        <result column="g_byds_spbgh" property="gBydsSpbgh" />
+        <result column="g_byds_dssl" property="gBydsDssl" />
+        <result column="g_byxq_lljx" property="gByxqLljx" />
+        <result column="g_byxq_stlx" property="gByxqStlx" />
+        <result column="g_byxq_sjdl" property="gByxqSjdl" />
+        <result column="g_bysj_shsj" property="gBysjShsj" />
+        <result column="g_bysj_zyfu" property="gBysjZyfu" />
+        <result column="g_byjt_zjrwdjt" property="gByjtZjrwdjt" />
+        <result column="g_byjt_zjdjt" property="gByjtZjdjt" />
+        <result column="g_byjt_syjt" property="gByjtSyjt" />
+        <result column="g_byjt_yzxwc" property="gByjtYzxwc" />
+        <result column="g_byjt_ztsl" property="gByjtZtsl" />
+        <result column="g_byxs_xqst" property="gByxsXqst" />
+        <result column="g_byxs_ygcp" property="gByxsYgcp" />
+        <result column="g_byxs_wmqsjs" property="gByxsWmqsjs" />
+        <result column="g_byxs_tywhhd" property="gByxsTywhhd" />
+        <result column="g_bysy_cgsz" property="gBysyCgsz" />
+        <result column="g_bysy_jhxx" property="gBysyJhxx" />
+        <result column="g_bysy_yxfx" property="gBysyYxfx" />
+        <result column="g_byjt_xqnyt" property="gByjtXqnyt" />
+        <result column="g_byjt_mhjt" property="gByjtMhjt" />
+        <result column="g_byjt_qcyy" property="gByjtQcyy" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        g_id, g_stuId, g_stuName, g_stuSex, g_stuCollege, g_stuGrade, g_stuClass, g_stuProfession, g_byds_spbgh, g_byds_dssl, g_byxq_lljx, g_byxq_stlx, g_byxq_sjdl, g_bysj_shsj, g_bysj_zyfu, g_byjt_zjrwdjt, g_byjt_zjdjt, g_byjt_syjt, g_byjt_yzxwc, g_byjt_ztsl, g_byxs_xqst, g_byxs_ygcp, g_byxs_wmqsjs, g_byxs_tywhhd, g_bysy_cgsz, g_bysy_jhxx, g_bysy_yxfx, g_byjt_xqnyt, g_byjt_mhjt, g_byjt_qcyy
+    </sql>
+
+</mapper>

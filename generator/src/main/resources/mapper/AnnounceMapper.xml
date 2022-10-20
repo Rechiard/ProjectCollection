@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.AnnounceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Announce">
+        <id column="an_id" property="anId" />
+        <result column="an_title" property="anTitle" />
+        <result column="an_time" property="anTime" />
+        <result column="an_content" property="anContent" />
+        <result column="an_status" property="anStatus" />
+        <result column="an_tu" property="anTu" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        an_id, an_title, an_time, an_content, an_status, an_tu
+    </sql>
+
+</mapper>

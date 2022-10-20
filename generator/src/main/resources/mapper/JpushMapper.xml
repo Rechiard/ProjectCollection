@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.JpushMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Jpush">
+        <id column="J_id" property="jId" />
+        <result column="J_st" property="jSt" />
+        <result column="J_message" property="jMessage" />
+        <result column="createTime" property="createTime" />
+        <result column="j_acid" property="jAcid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        J_id, J_st, J_message, createTime, j_acid
+    </sql>
+
+</mapper>

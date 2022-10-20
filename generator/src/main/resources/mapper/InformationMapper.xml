@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.InformationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Information">
+        <id column="InformationID" property="InformationID" />
+        <result column="InformationContent" property="InformationContent" />
+        <result column="InformationImage" property="InformationImage" />
+        <result column="InformationCreateTime" property="InformationCreateTime" />
+        <result column="title" property="title" />
+        <result column="introduction" property="introduction" />
+        <result column="banner" property="banner" />
+        <result column="type" property="type" />
+        <result column="statu" property="statu" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        InformationID, InformationContent, InformationImage, InformationCreateTime, title, introduction, banner, type, statu
+    </sql>
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.ActivityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Activity">
+        <id column="r_id" property="rId" />
+        <result column="r_name" property="rName" />
+        <result column="r_T_id" property="rTId" />
+        <result column="r_picture" property="rPicture" />
+        <result column="r_introduction" property="rIntroduction" />
+        <result column="r_type" property="rType" />
+        <result column="r_status" property="rStatus" />
+        <result column="r_college" property="rCollege" />
+        <result column="r_address" property="rAddress" />
+        <result column="r_startTime" property="rStarttime" />
+        <result column="r_endTime" property="rEndtime" />
+        <result column="r_startTimeTwo" property="rStarttimetwo" />
+        <result column="r_endTimeTwo" property="rEndtimetwo" />
+        <result column="r_createTime" property="rCreatetime" />
+        <result column="r_changeTime" property="rChangetime" />
+        <result column="r_popular" property="rPopular" />
+        <result column="r_zixun" property="rZixun" />
+        <result column="r_searchnum" property="rSearchnum" />
+        <result column="r_clicknum" property="rClicknum" />
+        <result column="r_maximum" property="rMaximum" />
+        <result column="r_nowmum" property="rNowmum" />
+        <result column="r_credit" property="rCredit" />
+        <result column="r_item" property="rItem" />
+        <result column="r_recsign" property="rRecsign" />
+        <result column="r_tu" property="rTu" />
+        <result column="r_zdcollege" property="rZdcollege" />
+        <result column="r_qrcode" property="rQrcode" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        r_id, r_name, r_T_id, r_picture, r_introduction, r_type, r_status, r_college, r_address, r_startTime, r_endTime, r_startTimeTwo, r_endTimeTwo, r_createTime, r_changeTime, r_popular, r_zixun, r_searchnum, r_clicknum, r_maximum, r_nowmum, r_credit, r_item, r_recsign, r_tu, r_zdcollege, r_qrcode
+    </sql>
+
+</mapper>

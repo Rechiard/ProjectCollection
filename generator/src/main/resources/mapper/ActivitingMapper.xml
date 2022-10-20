@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.ActivitingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Activiting">
+        <id column="A_R_id" property="aRId" />
+        <result column="A_R_Session" property="aRSession" />
+        <result column="A_S_id" property="aSId" />
+        <result column="A_status" property="aStatus" />
+        <result column="A_grade" property="aGrade" />
+        <result column="A_devicecode" property="aDevicecode" />
+        <result column="A_level" property="aLevel" />
+        <result column="A_firsttime" property="aFirsttime" />
+        <result column="A_secdevicecode" property="aSecdevicecode" />
+        <result column="A_secondtime" property="aSecondtime" />
+        <result column="A_thirddevicecode" property="aThirddevicecode" />
+        <result column="A_thirdtime" property="aThirdtime" />
+        <result column="A_fourdevicecode" property="aFourdevicecode" />
+        <result column="A_fourtime" property="aFourtime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        A_R_id, A_R_Session, A_S_id, A_status, A_grade, A_devicecode, A_level, A_firsttime, A_secdevicecode, A_secondtime, A_thirddevicecode, A_thirdtime, A_fourdevicecode, A_fourtime
+    </sql>
+
+</mapper>

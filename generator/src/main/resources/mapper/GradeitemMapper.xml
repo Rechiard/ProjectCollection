@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.GradeitemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.system.entity.Gradeitem">
+        <id column="gitem_id" property="gitemId" />
+        <result column="gitem_stuId" property="gitemStuid" />
+        <result column="gitem_stuName" property="gitemStuname" />
+        <result column="gitem_stuSex" property="gitemStusex" />
+        <result column="gitem_stuCollege" property="gitemStucollege" />
+        <result column="gitem_stuGrade" property="gitemStugrade" />
+        <result column="gitem_stuClass" property="gitemStuclass" />
+        <result column="gitem_stuProfession" property="gitemStuprofession" />
+        <result column="gitem_aitem" property="gitemAitem" />
+        <result column="gitem_aName" property="gitemAname" />
+        <result column="gitem_aId" property="gitemAid" />
+        <result column="gitem_teacher" property="gitemTeacher" />
+        <result column="gitem_address" property="gitemAddress" />
+        <result column="gitem_date" property="gitemDate" />
+        <result column="gitem_grade" property="gitemGrade" />
+        <result column="gitem_credit" property="gitemCredit" />
+        <result column="gitem_type" property="gitemType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        gitem_id, gitem_stuId, gitem_stuName, gitem_stuSex, gitem_stuCollege, gitem_stuGrade, gitem_stuClass, gitem_stuProfession, gitem_aitem, gitem_aName, gitem_aId, gitem_teacher, gitem_address, gitem_date, gitem_grade, gitem_credit, gitem_type
+    </sql>
+
+</mapper>
